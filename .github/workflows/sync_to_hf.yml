@@ -21,7 +21,6 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git lfs install
-          git lfs track "*.hyb"
-          git add .gitattributes
-          git commit -m "Track hyb files with LFS" || true
+          # Rewrite history to move large files to LFS pointers
+          git lfs migrate import --include="*.hyb,*.pdf" --everything --yes
           git push --force https://razorWX12:$HF_TOKEN@huggingface.co/spaces/razorWX12/TEST main

@@ -17,4 +17,11 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push --force https://razorWX12:$HF_TOKEN@huggingface.co/spaces/razorWX12/TEST main
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git lfs install
+          git lfs track "*.hyb"
+          git add .gitattributes
+          git commit -m "Track hyb files with LFS" || true
+          git push --force https://razorWX12:$HF_TOKEN@huggingface.co/spaces/razorWX12/TEST main

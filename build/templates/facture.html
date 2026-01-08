@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Facture {{ .numero }}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 210mm;
+            height: 297mm;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 11px;
+            color: #333;
+        }
+
+        body {
+            padding: 25px 30px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2a9d8f;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #264653;
+            margin-bottom: 6px;
+        }
+
+        .company-info {
+            font-size: 10px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .invoice-box {
+            text-align: right;
+        }
+
+        .invoice-title {
+            font-size: 28px;
+            color: #264653;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .invoice-number {
+            font-size: 14px;
+            color: #2a9d8f;
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .invoice-date {
+            color: #666;
+            margin-top: 6px;
+        }
+
+        /* Client & Details */
+        .info-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .client-box,
+        .details-box {
+            width: 48%;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .section-title {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .client-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #264653;
+        }
+
+        .client-details {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        thead tr {
+            background: #264653;
+            color: white;
+        }
+
+        th {
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        th:last-child,
+        td:last-child {
+            text-align: right;
+        }
+
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .item-desc {
+            color: #666;
+            font-size: 9px;
+            margin-top: 3px;
+        }
+
+        /* Totals */
+        .totals-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .totals-box {
+            width: 260px;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 11px;
+        }
+
+        .total-row:last-child {
+            border-bottom: none;
+        }
+
+        .total-row.grand-total {
+            font-size: 16px;
+            font-weight: bold;
+            color: #264653;
+            border-top: 2px solid #264653;
+            margin-top: 6px;
+            padding-top: 10px;
+        }
+
+        .total-row.grand-total .amount {
+            color: #2a9d8f;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .payment-info {
+            background: #264653;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 10px;
+        }
+
+        .payment-title {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .payment-details {
+            line-height: 1.6;
+        }
+
+        .legal-notice {
+            text-align: center;
+            color: #888;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .thank-you {
+            text-align: center;
+            font-size: 13px;
+            color: #2a9d8f;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">{{ .entreprise }}</div>
+            <div class="company-info">
+                {{ .entreprise_adresse }}<br>
+                Tél: {{ .entreprise_tel }}<br>
+                NIF: {{ .entreprise_nif }} | RCCM: {{ .entreprise_rccm }}
+            </div>
+        </div>
+        <div class="invoice-box">
+            <div class="invoice-title">FACTURE</div>
+            <div class="invoice-number">N° {{ .numero }}</div>
+            <div class="invoice-date">{{ .date }}</div>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <div class="client-box">
+            <div class="section-title">Facturé à</div>
+            <div class="client-name">{{ .client }}</div>
+            <div class="client-details">{{ .client_adresse }}<br>{{ .client_tel }}</div>
+        </div>
+        <div class="details-box">
+            <div class="section-title">Détails</div>
+            <div class="client-details">
+                <strong>Paiement:</strong> {{ .mode_paiement }}<br>
+                <strong>Échéance:</strong> {{ .echeance }}<br>
+                <strong>Devise:</strong> FCFA
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 50%;">Description</th>
+                <th style="width: 15%;">Qté</th>
+                <th style="width: 15%;">P.U.</th>
+                <th style="width: 20%;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range .articles }}
+            <tr>
+                <td><strong>{{ .nom }}</strong>
+                    <div class="item-desc">{{ .desc }}</div>
+                </td>
+                <td>{{ .qte }}</td>
+                <td>{{ .pu }}</td>
+                <td>{{ .total }} FCFA</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+
+    <div class="totals-section">
+        <div class="totals-box">
+            <div class="total-row"><span>Sous-total HT</span><span>{{ .sous_total }} FCFA</span></div>
+            <div class="total-row"><span>TVA ({{ .tva_taux }}%)</span><span>{{ .tva_montant }} FCFA</span></div>
+            <div class="total-row grand-total"><span>Total TTC</span><span class="amount">{{ .total_ttc }} FCFA</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="payment-info">
+            <div class="payment-title">Coordonnées bancaires</div>
+            <div class="payment-details">Banque: {{ .banque }} | IBAN: {{ .iban }} | Titulaire: {{ .entreprise }}</div>
+        </div>
+        <div class="legal-notice">
+            Retard de paiement : pénalité de 10%. TVA selon Art. 261-1 CGI Niger.
+        </div>
+        <div class="thank-you">Merci pour votre confiance ! 🙏</div>
+    </div>
+</body>
+
+</html>

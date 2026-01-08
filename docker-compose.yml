@@ -1,0 +1,10 @@
+services:
+  gotenberg:
+    image: gotenberg-json:local
+    container_name: gotenberg-json
+    restart: unless-stopped
+    ports:
+      - "1000:3000"
+    environment:
+      - GOTENBERG_API_TIMEOUT=300s
+      - GOTENBERG_CHROMIUM_ALLOW_FILE_ACCESS_FROM_FILES=true

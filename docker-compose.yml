@@ -1,10 +1,26 @@
 services:
   gotenberg:
+    build: .
     image: gotenberg-json:local
     container_name: gotenberg-json
     restart: unless-stopped
+    volumes:
+      - ./build/templates:/opt/gotenberg/templates
     ports:
       - "1000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gotenberg.rule=Host(`gotenberg.nordikforge.com`)"
+      - "traefik.http.routers.gotenberg.entrypoints=websecure"
+      - "traefik.http.routers.gotenberg.tls.certresolver=myresolver"
+      - "traefik.http.services.gotenberg.loadbalancer.server.port=3000"
     environment:
       - GOTENBERG_API_TIMEOUT=300s
       - GOTENBERG_CHROMIUM_ALLOW_FILE_ACCESS_FROM_FILES=true
+    networks:
+      - default
+
+networks:
+  default:
+    name: web_network
+    external: true

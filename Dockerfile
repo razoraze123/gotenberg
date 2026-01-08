@@ -2,6 +2,7 @@
 # concatenate them. Also, we have to repeat ARG instructions in each build
 # stage that uses them.
 ARG GOLANG_VERSION=1.25.5
+# Trigger rebuild for HF update - 2026-01-08
 
 # ----------------------------------------------
 # pdfcpu binary build stage
